@@ -1,0 +1,17 @@
+name: PR lint
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+    branches: [main]
+
+jobs:
+  pr-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bonivan/pr_title_lint_action@master
+        with:
+          title-regex: '([A-Z]+-[0-9]+)\b.*'
+          error-message: 'Please include a Jira ticket ID (for example INSTALL-1234) in the PR title as first word.'
+          exclude-files-regex: '.*(\\.go|\\.mod|\\.sum).*'
+          github-token: '${{ secrets.GIT_TOKEN }}'
