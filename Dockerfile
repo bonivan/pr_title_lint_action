@@ -1,13 +1,12 @@
 FROM golang:1.16.3 as builder
+RUN mkdir /action
+COPY . /action
+WORKDIR /action
+RUN GO111MODULE=on go list /action/...  && go build -o /action/pr_title_lint_action /action/main.go
 
-COPY . .
-
-GOPRIVATE=github.com/bonivan/pr_lint_action GO111MODULE=on go list ./...
-go test ./...
-go build -o /pr_lint_action ./cmd/main.go
-
-FROM docker.internal.sysdig.com/sysdig-mini-ubi:1.1.12
-
-COPY --from=builder /pr_lint_action /pr_lint_action
-
-ENTRYPOINT ["/pr_lint_action"]
+FROM ubuntu:18.04
+RUN apt-get update -y \
+        && apt-get install ca-certificates -y --no-install-recommends
+RUN mkdir /action
+COPY --from=builder /action/pr_title_lint_action /action/pr_title_lint_action
+ENTRYPOINT ["/action/pr_title_lint_action"]
