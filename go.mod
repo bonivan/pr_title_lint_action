@@ -1,4 +1,4 @@
-module github.com/draios/pr_lint_action
+module github.com/bonivan/pr_lint_action
 
 go 1.16
 
