@@ -32,7 +32,7 @@ func main() {
 	client := github.NewClient(tc)
 
 	if token == "" {
-		log.Infof("Empty token")
+		log.Infof("Empty GitHub token")
 	}
 
 	pr, err := goaction.GetPullRequest()
