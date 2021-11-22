@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: bonivan/pr_title_lint_action@main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
         with:
           title-regex: '([A-Z]+-[0-9]+)\b.*'
           error-message: 'Please include a Jira ticket ID (for example INSTALL-1234) in the PR title as first word.'
           exclude-files-regex: '.*(\\.go|\\.mod|\\.sum).*'
-          github-token: '${{ secrets.GIT_TOKEN }}'
+          github-token: '${{ secrets.GITHUB_TOKEN }}'

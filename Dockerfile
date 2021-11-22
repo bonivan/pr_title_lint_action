@@ -1,4 +1,5 @@
 FROM golang:1.17.1 as builder
+
 RUN mkdir /action
 COPY . /action
 WORKDIR /action

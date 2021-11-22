@@ -12,7 +12,14 @@ import (
 )
 
 func main() {
-	token := os.Getenv("secrets.GITHUB-TOKEN")
+	log.Println(os.Environ())
+	token := os.Getenv("secrets.GITHUB_TOKEN")
+	if token == "" {
+		token = os.Getenv("GITHUB_TOKEN")
+	}
+	if token == "" {
+		token = os.Getenv("INPUT_GITHUB-TOKEN")
+	}
 	titleRegex := os.Getenv("INPUT_TITLE-REGEX")
 	errorMessage := os.Getenv("INPUT_ERROR-MESSAGE")
 	excludeFilesRegex := os.Getenv("INPUT_EXCLUDE-FILES-REGEX")
